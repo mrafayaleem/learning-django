@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--[if lt IE 9 ]> 
+<html lang="en" class="ie8 no-js new-paa lang-en" data-emirate="dubai">
+   <![endif]-->
+   <!--[if IE 9 ]> 
+   <html lang="en" class="ie9 no-js new-paa lang-en" data-emirate="dubai">
+      <![endif]-->
+      <!--[if (gt IE 9)|!(IE)]><!--> 
+      <html lang="en" class="no-js new-paa lang-en" data-emirate="dubai" >
+         <!--<![endif]-->
+         <head>
+            <title>dubizzle.com - Place An Ad - Pick A Category</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0">
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />            
+            <link href="http://m.dbzstatic.com/assets/css/paa/application-en_1394543420.css" rel="stylesheet" type="text/css" media="all" />
+         </head>
+         <body class="">
+            <div id="desktop-wrapper">
+               <header>
+                  <a href="/" id="header-logo"></a>
+               </header>
+               <div id="content">
+                  <div id="tax-container">
+                     <h2>Please choose a category for your ad</h2>
+                     <div id="tax-category-list">
+                        <div id="tax-categories">
+                           <ul class="motors">
+                            {% for key, value in template_dict.items %}
+
+                              <li>
+                                 <a href={{ value.1 }}>
+                                 <span>{{ key|capfirst }}</span>
+                                 </a>
+                              </li>
+                            {% endfor %}
+                              <!-- <li>
+                                 <a href="/place-an-ad/taxonomy/motors/auto-accessories-parts/">
+                                 <span>Auto Accessories &amp; Parts</span>
+                                 </a>
+                              </li>
+                              <li>
+                                 <a href="/place-an-ad/taxonomy/motors/boats/">
+                                 <span>Boats</span>
+                                 </a>
+                              </li>
+                              <li>
+                                 <a href="/place-an-ad/taxonomy/motors/heavy-vehicles/">
+                                 <span>Heavy Vehicles</span>
+                                 </a>
+                              </li>
+                              <li>
+                                 <a href="/place-an-ad/taxonomy/motors/motorcycles/">
+                                 <span>Motorcycles</span>
+                                 </a>
+                              </li> -->
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <footer>
+                  <div id="peel-wrapper">
+                     <div id="page-peel-left"></div>
+                     <div id="page-peel-right"></div>
+                  </div>
+               </footer>
+            </div>            
+         </body>
+      </html>

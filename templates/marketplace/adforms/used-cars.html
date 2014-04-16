@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<!--[if lt IE 9 ]> 
+<html lang="en" class="ie8 no-js new-paa lang-en" data-emirate="dubai">
+   <![endif]-->
+   <!--[if IE 9 ]> 
+   <html lang="en" class="ie9 no-js new-paa lang-en" data-emirate="dubai">
+      <![endif]-->
+      <!--[if (gt IE 9)|!(IE)]><!--> 
+      <html lang="en" class="no-js new-paa lang-en" data-emirate="dubai" >
+         <!--<![endif]-->
+         <head>
+            <title>dubizzle.com - Place An Ad - Enter Listing Details</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0">
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            
+            <link href="http://m.dbzstatic.com/assets/css/paa/application-en_1394543420.css" rel="stylesheet" type="text/css" media="all" />
+            
+         </head>
+         <body class="">
+            <div id="desktop-wrapper">
+               <header>
+                  <a href="/" id="header-logo"></a>
+               </header>
+               <div id="content">
+                  <div id="enter-details-overlay" class="overlay-layer hidden"></div>
+                  <div id="enter-details-alert" class="enter-details-alert-box hidden">
+                     <h2 class="lobster">Woah there!</h2>
+                     <p>We're still uploading your ad images but you're trying to leave the page.</p>
+                     <p>We recommend you return to the page and wait for them.</p>
+                     <a id="enter-details-return" class="button button-yalla button-green lobster">Wait for the photos</a>
+                  </div>
+                  <form method="POST" action="/place-an-ad/taxonomy/motors/used-cars/new/">
+                  	{% csrf_token %}
+                  	<!-- {{ form.errors|length }}
+                  	{% for field, errors in form.errors.items %}
+                  		{{ field }}
+    					{% for error in errors %}
+    						{{ error }}
+    					{% endfor %}
+    				{% endfor %} -->
+                    <div id="form_wrapper">
+                    	{% if form.errors %}
+                    	<div id="error-summary">
+							<span id="slipups-counter">{{ form.errors|length }}</span>
+							<span id="slipups-text" data-singular="slip-up">slip-ups</span>
+						</div>
+						{% endif %}
+                        <div id="tax-category-list">
+                        </div>
+                        <br>
+                        <div class={% if form.title.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           	<label for="id_name" >
+                           	{{ form.title.label}}
+                           	</label>
+                           	{{ form.title }}                           
+                        	{% if form.title.errors %}
+                           	<span class="error-message">{{ form.title.errors|striptags }}</span>
+                           	{% endif %}
+                        </div>
+                        <div class={% if form.make.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_make" >
+                           {{ form.make.label }}
+                           </label>
+                           {{ form.make }}
+                           {% if form.make.errors %}
+                           <span class="error-message">{{ form.make.errors|striptags }}</span>
+                           {% endif %}
+                           <!-- <input data-helper-text="Phone no." name="phone_number" type="tel" pattern="\+?[0-9]*" placeholder="Phone number" id="id_phone_number" /> -->
+                        </div>                        
+                        <div class={% if form.phone.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_phone_number" >
+                           {{ form.phone.label }}
+                           </label>
+                           {{ form.phone }}
+                           {% if form.phone.errors %}
+                           <span class="error-message">{{ form.phone.errors|striptags }}</span>
+                           {% endif %}
+                           <!-- <input data-helper-text="Phone no." name="phone_number" type="tel" pattern="\+?[0-9]*" placeholder="Phone number" id="id_phone_number" /> -->
+                        </div>
+                        <div class={% if form.price.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_price" >
+                           {{ form.price.label }}
+                           </label>
+                           {{ form.price }}
+                           {% if form.price.errors %}
+                           <span class="error-message">{{ form.price.errors|striptags }}</span>
+                           {% endif %}
+                           <!-- <input data-helper-text="Price" type="tel" data-suffix="AED" maxlength="20" pattern="^\d+(\.\d{1,2})?$" data-field-type="currency" placeholder="Price" id="id_price" name="price" /> -->
+                        </div>
+                        <div class={% if form.description.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_description" >
+                           {{ form.description.label }}
+                           </label>
+                           {{ form.description }}
+                           {% if form.description.errors %}
+                           <span class="error-message">{{ form.description.errors|striptags }}</span>
+                           {% endif %}
+                           <!-- <textarea data-helper-text="Tell us about the characteristics of the car, how long have you owned it, does it have any bumps, scrapes or glitches?" rows="10" name="description" placeholder="Describe your Toyota" cols="40" id="id_description"></textarea> -->
+                        </div>
+                        <div class={% if form.year.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_year" >
+                           {{ form.year.label }}
+                           </label>
+                           {{ form.year }}
+                           {% if form.year.errors %}
+                           <span class="error-message">{{ form.year.errors|striptags }}</span>
+                           {% endif %}
+                           <!-- <select data-helper-text="Manufactured" name="year" id="id_year">
+                              <option value="" selected="selected">Year</option>
+                              <option value="2014">2014</option>
+                              <option value="2013">2013</option>
+                              <option value="2012">2012</option>
+                              <option value="2011">2011</option>
+                              <option value="2010">2010</option>
+                              <option value="2009">2009</option>
+                              <option value="2008">2008</option>
+                              <option value="2007">2007</option>
+                              <option value="2006">2006</option>
+                              <option value="2005">2005</option>
+                              <option value="2004">2004</option>
+                              <option value="2003">2003</option>
+                              <option value="2002">2002</option>
+                              <option value="2001">2001</option>
+                              <option value="2000">2000</option>
+                              <option value="1999">1999</option>
+                              <option value="1998">1998</option>
+                              <option value="1997">1997</option>
+                              <option value="1996">1996</option>
+                              <option value="1995">1995</option>
+                              <option value="1994">1994</option>
+                              <option value="1993">1993</option>
+                              <option value="1992">1992</option>
+                              <option value="1991">1991</option>
+                              <option value="1990">1990</option>
+                              <option value="1989">1989</option>
+                              <option value="1988">1988</option>
+                              <option value="1987">1987</option>
+                              <option value="1986">1986</option>
+                              <option value="1985">1985</option>
+                              <option value="1984">1984</option>
+                              <option value="1983">1983</option>
+                              <option value="1982">1982</option>
+                              <option value="1981">1981</option>
+                              <option value="1980">1980</option>
+                              <option value="1979">1979</option>
+                              <option value="1978">1978</option>
+                              <option value="1977">1977</option>
+                              <option value="1976">1976</option>
+                              <option value="1975">1975</option>
+                              <option value="1974">1974</option>
+                              <option value="1973">1973</option>
+                              <option value="1972">1972</option>
+                              <option value="1971">1971</option>
+                              <option value="1970">1970</option>
+                              <option value="1969">1969</option>
+                              <option value="1968">1968</option>
+                              <option value="1967">1967</option>
+                              <option value="1966">1966</option>
+                              <option value="1965">1965</option>
+                              <option value="1964">1964</option>
+                              <option value="1963">1963</option>
+                              <option value="1962">1962</option>
+                              <option value="1961">1961</option>
+                              <option value="1960">1960</option>
+                              <option value="1959">1959</option>
+                              <option value="1958">1958</option>
+                              <option value="1957">1957</option>
+                              <option value="1956">1956</option>
+                              <option value="1955">1955</option>
+                              <option value="1954">1954</option>
+                              <option value="1953">1953</option>
+                              <option value="1952">1952</option>
+                              <option value="1951">1951</option>
+                              <option value="1950">1950</option>
+                              <option value="1949">1949</option>
+                              <option value="1948">1948</option>
+                              <option value="1947">1947</option>
+                              <option value="1946">1946</option>
+                              <option value="1945">1945</option>
+                              <option value="1944">1944</option>
+                              <option value="1943">1943</option>
+                              <option value="1942">1942</option>
+                              <option value="1941">1941</option>
+                              <option value="1940">1940</option>
+                              <option value="1939">1939</option>
+                              <option value="1938">1938</option>
+                              <option value="1937">1937</option>
+                              <option value="1936">1936</option>
+                              <option value="1935">1935</option>
+                              <option value="1934">1934</option>
+                              <option value="1933">1933</option>
+                              <option value="1932">1932</option>
+                              <option value="1931">1931</option>
+                              <option value="1930">1930</option>
+                              <option value="1929">1929</option>
+                              <option value="1928">1928</option>
+                              <option value="1927">1927</option>
+                              <option value="1926">1926</option>
+                              <option value="1925">1925</option>
+                              <option value="1924">1924</option>
+                              <option value="1923">1923</option>
+                              <option value="1922">1922</option>
+                              <option value="1921">1921</option>
+                           </select> -->
+                        </div>
+                        <div class={% if form.kilometers.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_kilometers" >
+                           {{ form.kilometers.label }}
+                           </label>
+                           {{ form.kilometers }}
+                           {% if form.kilometers.errors %}
+                           <span class="error-message">{{ form.kilometers.errors|striptags }}</span>
+                           {% endif %}
+                           <!-- <input data-helper-text="kms" type="tel" name="kilometers" maxlength="10" pattern="[0-9]*" data-field-type="number" placeholder="Kilometers" id="id_kilometers" /> -->
+                        </div>
+                        <div class={% if form.body_condition.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_body_condition" >
+                           {{ form.body_condition.label }}
+                           </label>
+                           {{ form.body_condition }}
+                           {% if form.body_condition.errors %}
+                           <span class="error-message">{{ form.body_condition.errors|striptags }}</span>
+                           {% endif %}
+                           <!-- <select data-helper-text="Body" name="body_condition" id="id_body_condition">
+                              <option value="" selected="selected">Body condition</option>
+                              <option value="5">Perfect inside and out</option>
+                              <option value="4">No accidents, very few faults</option>
+                              <option value="3">A bit of wear &amp; tear, all repaired</option>
+                              <option value="2">Normal wear &amp; tear, a few issues</option>
+                              <option value="1">Lots of wear &amp; tear to the body</option>
+                           </select> -->
+                        </div>
+                        <div class={% if form.mech_condition.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_mechanical_condition" >
+                           {{ form.mech_condition.label }}
+                           </label>
+                           {{ form.mech_condition }}
+                           {% if form.mech_condition.errors %}
+                           <span class="error-message">{{ form.mech_condition.errors|striptags }}</span>
+                           {% endif %}
+                           <!-- <select data-helper-text="Mchn." name="mechanical_condition" id="id_mechanical_condition">
+                              <option value="" selected="selected">Mechanical condition</option>
+                              <option value="5">Perfect inside and out</option>
+                              <option value="4">Minor faults, all fixed</option>
+                              <option value="3">Major faults, all fixed</option>
+                              <option value="2">Major faults fixed, small remain</option>
+                              <option value="1">Ongoing minor &amp; major faults</option>
+                           </select> -->
+                        </div>
+                        <div class={% if form.seller_type.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_seller_type" >
+                           {{ form.seller_type.label }}
+                           </label>
+                           {{ form.seller_type }}
+                           {% if form.seller_type.errors %}
+                           <span class="error-message">{{ form.seller_type.errors|striptags }}</span>
+                           {% endif %}
+                           <!-- <select data-helper-text="Seller type" name="seller_type" id="id_seller_type">
+                              <option value="" selected="selected">Seller type</option>
+                              <option value="OW">Owner</option>
+                              <option value="DL">Dealer</option>
+                              <option value="DS">Dealership/Certified Pre-Owned</option>
+                           </select> -->
+                        </div>
+                        <div class={% if form.trim.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_motors_trim" >
+                           {{ form.trim.label }}
+                           </label>
+                           {{ form.trim }}
+                           {% if form.trim.errors %}
+                           <span class="error-message">{{ form.trim.errors|striptags }}</span>
+                           {% endif %}
+                           <!-- <select data-helper-text="Trim" name="motors_trim" id="id_motors_trim">
+                              <option value="" selected="selected">Trim</option>
+                              <option value="2050">Base</option>
+                              <option value="2041">Exclusive</option>
+                              <option value="2038">GLI</option>
+                              <option value="2052">GLI MID</option>
+                              <option value="2037">GLI TOP</option>
+                              <option value="2039">LE</option>
+                              <option value="2053">Other</option>
+                              <option value="2042">Royal</option>
+                              <option value="2044">S</option>
+                              <option value="2051">SE</option>
+                              <option value="2045">SE Plus</option>
+                              <option value="2048">Sport</option>
+                              <option value="2049">Sport Plus</option>
+                              <option value="2040">XLI</option>
+                              <option value="2047">XLI MID</option>
+                              <option value="2043">XLI TOP</option>
+                              <option value="2046">XRS</option>
+                           </select> -->
+                        </div>
+                        <div class={% if form.body_type.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_body_type" >
+                           {{ form.body_type.label }}
+                           </label>
+                           {{ form.body_type }}
+                           {% if form.body_type.errors %}
+                           <span class="error-message">{{ form.body_type.errors|striptags }}</span>
+                           {% endif %}
+                           <!-- <select data-helper-text="Body type" name="body_type" id="id_body_type">
+                              <option value="" selected="selected">Body Type</option>
+                              <option value="347">Coupe</option>
+                              <option value="351">Crossover</option>
+                              <option value="358">Hard Top Convertible</option>
+                              <option value="349">Hatchback</option>
+                              <option value="355">Pick Up Truck</option>
+                              <option value="348">Sedan</option>
+                              <option value="357">Soft Top Convertible</option>
+                              <option value="353">Sports Car</option>
+                              <option value="352">SUV</option>
+                              <option value="356">Utility Truck</option>
+                              <option value="354">Van</option>
+                              <option value="350">Wagon</option>
+                              <option value="359">Other</option>
+                           </select> -->
+                        </div>
+                        <div class={% if form.doors.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_doors" >
+                           {{ form.doors.label }}
+                           </label>
+                           {{ form.doors }}
+                           {% if form.doors.errors %}
+                           <span class="error-message">{{ form.doors.errors|striptags }}</span>
+                           {% endif %}
+                           <!-- <select data-helper-text="Doors" name="doors" id="id_doors">
+                              <option value="" selected="selected">Doors</option>
+                              <option value="360">2 door</option>
+                              <option value="361">3 door</option>
+                              <option value="362">4 door</option>
+                              <option value="364">5+ doors</option>
+                           </select> -->
+                        </div>
+                        <div class={% if form.cylinders.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_no._of_cylinders" >
+                           {{ form.cylinders.label }}
+                           </label>
+                           {{ form.cylinders }}
+                           {% if form.cylinders.errors %}
+                           <span class="error-message">{{ form.cylinders.errors|striptags }}</span>
+                           {% endif %}
+                           <!-- <select data-helper-text="Cylinders" name="no._of_cylinders" id="id_no._of_cylinders">
+                              <option value="" selected="selected">No. of Cylinders</option>
+                              <option value="365">3</option>
+                              <option value="366">4</option>
+                              <option value="367">5</option>
+                              <option value="368">6</option>
+                              <option value="369">8</option>
+                              <option value="371">10</option>
+                              <option value="746">12</option>
+                              <option value="791">Unknown</option>
+                           </select> -->
+                        </div>
+                        <div class={% if form.color.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_color" >
+                           {{ form.color.label }}
+                           </label>
+                           {{ form.color }}
+                           {% if form.color.errors %}
+                           <span class="error-message">{{ form.color.errors|striptags }}</span>
+                           {% endif %}
+                           <!-- <select data-helper-text="Color" name="color" id="id_color">
+                              <option value="" selected="selected">Color</option>
+                              <option value="707">Black</option>
+                              <option value="708">Blue</option>
+                              <option value="709">Brown</option>
+                              <option value="710">Burgundy</option>
+                              <option value="711">Gold</option>
+                              <option value="712">Grey</option>
+                              <option value="713">Green</option>
+                              <option value="714">Purple</option>
+                              <option value="715">Red</option>
+                              <option value="716">Silver</option>
+                              <option value="717">Tan</option>
+                              <option value="718">Teal</option>
+                              <option value="719">White</option>
+                              <option value="795">Yellow</option>
+                              <option value="720">Other Color</option>
+                           </select> -->
+                        </div>
+                        <div class={% if form.transmission.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_transmission_type" >
+                           {{ form.transmission.label }}
+                           </label>
+                           {{ form.transmission }}
+                           {% if form.transmission.errors %}
+                           <span class="error-message">{{ form.transmission.errors|striptags }}</span>
+                           {% endif %}
+                          <!--  <select data-helper-text="Transmission" name="transmission_type" id="id_transmission_type">
+                              <option value="" selected="selected">Transmission Type</option>
+                              <option value="378">Manual Transmission</option>
+                              <option value="377">Automatic Transmission</option>
+                           </select> -->
+                        </div>
+                        <div class={% if form.horse_power.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_horsepower" >
+                           {{ form.horse_power.label }}
+                           </label>
+                           {{ form.horse_power }}
+                           {% if form.horse_power.errors %}
+                           <span class="error-message">{{ form.horse_power.errors|striptags }}</span>
+                           {% endif %}
+                           <!-- <select data-helper-text="HP" name="horsepower" id="id_horsepower">
+                              <option value="" selected="selected">Horsepower</option>
+                              <option value="387">Less than 150 HP</option>
+                              <option value="388">150 - 200 HP</option>
+                              <option value="389">200 - 300 HP</option>
+                              <option value="390">300 - 400 HP</option>
+                              <option value="391">400+ HP</option>
+                              <option value="792">Unknown</option>
+                           </select> -->
+                        </div>
+                        <div class={% if form.warranty.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_warranty" >
+                           {{ form.warranty.label }}
+                           </label>
+                           {{ form.warranty }}
+                           {% if form.warranty.errors %}
+                           <span class="error-message">{{ form.warranty.errors|striptags }}</span>
+                           {% endif %}
+                          <!--  <select data-helper-text="Warranty" name="warranty" id="id_warranty">
+                              <option value="" selected="selected">Warranty</option>
+                              <option value="725">Yes</option>
+                              <option value="726">No</option>
+                              <option value="727">Does not apply</option>
+                           </select> -->
+                        </div>
+                        <div class={% if form.fuel.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_fuel_type" >
+                           {{ form.fuel.label }}
+                           </label>
+                           {{ form.fuel }}
+                           {% if form.fuel.errors %}
+                           <span class="error-message">{{ form.fuel.errors|striptags }}</span>
+                           {% endif %}
+                           <!-- <select data-helper-text="Fuel" name="fuel_type" id="id_fuel_type">
+                              <option value="" selected="selected">Fuel Type</option>
+                              <option value="380">Gasoline</option>
+                              <option value="381">Diesel</option>
+                              <option value="382">Hybrid</option>
+                              <option value="383">Electric</option>
+                           </select> -->
+                        </div>
+                        <div class="extras">
+                           <label for="id_extras" >
+                           Extras
+                           </label>
+                           <ul>
+                              <li><label for="id_extras_0"> {{ form.air_conditioning }} {{ form.air_conditioning.label }}</label></li>
+                              <li><label for="id_extras_1">{{ form.body_kit }} {{form.body_kit.label}}</label></li>                              
+                           </ul>
+                        </div>
+                        <span class="show-more">
+                        show more extras
+                        <span class="SSPika arrow-down">&#x2B07;</span>
+                        </span>
+                        <br>
+                        <div class={% if form.location.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
+                           <label for="id_location" >
+                           {{ form.location.label }}
+                           </label>
+                           {{ form.location }}
+                           {% if form.location.errors %}
+                           <span class="error-message">{{ form.location.errors|striptags }}</span>
+                           {% endif %}
+                        </div>
+                        <div id="map-wrapper">
+                           <span class="strike-under"><span>or</span></span>
+                           <div class="slide-wrapper">
+                              <button type="button" class="button subtle" id="locate-on-map">
+                              <span class="location-msg" data-msg-relocate="Change location">Locate on a map</span>
+                              <span class="SSPika">&#xE6D1;</span>
+                              </button>
+                           </div>
+                           <div id="map-dog-ear" class="dog-ear">
+                              <span class="map-crosshair">&#x2316;</span>
+                              <h2><strong>Click & drag</strong> the map to locate</h2>
+                              <input type="button" class="button button-yalla button-green lobster" value="Got it!" id="map-got-it" />
+                           </div>
+                           <div id="map-canvas-wrapper">
+                              <div id="map-canvas"></div>
+                           </div>
+                           <div id="map-location" class="hidden">
+                              <span id="neighbourhood-name"
+                                 data-msg-loading="Finding your location..."
+                                 data-msg-water="Are you scuba diving?"
+                                 data-msg-land="Lost in the desert?"
+                                 data-msg-generic="Do you need a GPS, mate?">
+                              Finding your location...
+                              </span>
+                           </div>
+                           <button type="button" id="tick-button" class="button button-yalla button-green SSPika hidden">&#x2713;</button>
+                           <input id="id_point_selected" type="hidden" value="1" name="point_selected" />
+                        </div>
+                        <input id="enter-details-submit" type="submit" class="button button-yalla button-green lobster" value="Submit" />
+                     </div>
+                     <div id="uploaded-images" style="display: none;">
+                     </div>
+                  </form>
+               </div>
+               <footer>
+                  <div id="peel-wrapper">
+                     <div id="page-peel-left"></div>
+                     <div id="page-peel-right"></div>
+                  </div>
+               </footer>
+            </div>            
+         </body>
+      </html>

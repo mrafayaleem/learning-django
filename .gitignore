@@ -1,0 +1,13 @@
+# Byte-compiled
+*.py[cod]
+
+# Backup files
+*.bak
+*.bak.py
+*.py.bak
+
+#Pycharm dir
+.idea/
+
+#Archives
+*.zip
