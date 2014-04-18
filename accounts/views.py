@@ -1,37 +1,40 @@
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.contrib.auth import login as django_login, logout as django_logout, authenticate
-from django.core.urlresolvers import reverse
-from django.core import serializers
+from django.core.urlresolvers import reverse, reverse_lazy
+from django.views.generic.edit import FormView
 
 from accounts.forms import AuthenticationForm, RegistrationForm, DubizzleUserProfileChangeForm
 from accounts.models import DubizzleUser
 
 
-def login(request):
-    """Dubizzle login view"""
+class LoginView(FormView):
+    template_name = 'accounts/login.html'
+    form_class = AuthenticationForm
+    success_url = reverse_lazy('accounts:profile')
 
-    # GET method should not be allowed here!
-    if request.method == 'POST' and request.session.get('user_id', None) is None:
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            user = authenticate(email=request.POST['email'], password=request.POST['password'])
-            if user is not None:
-                if user.is_active:
-                    django_login(request, user)
-                    request.session['user_id'] = user.id
-                    request.session['user_short_name'] = user.get_short_name()
-                    return redirect(reverse('accounts:profile'))  # Return to profile page.
-    elif request.session.get('user_id', None) is None:
-        form = AuthenticationForm()
-    else:
-        return redirect(reverse('accounts:profile'))
+    def post(self, request, *args, **kwargs):
+        if request.session.get('user_id', None) is None:
+            return super(LoginView, self).post(request, args, kwargs)
+        return redirect(self.success_url)
 
-    # To return errors on the form.
-    return render_to_response('accounts/register.html', {
-        'form': form,
-        'login_status': 'class=active'  # Playing with the html tabs here.
-    }, context_instance=RequestContext(request))
+    def form_valid(self, form):
+        request = self.request
+        user = authenticate(email=request.POST['email'], password=request.POST['password'])
+        if user is not None and user.is_active:
+            django_login(request, user)
+            request.session['user_id'] = user.id
+            request.session['user_short_name'] = user.get_short_name()
+            return redirect(self.success_url)
+        else:
+            return super(LoginView, self).form_invalid(form)  # To tell that user with these credentials is not
+            # registered.
+
+    def form_invalid(self, form):
+        """
+        Override this method later to perform custom validation checks on user credentials.
+        """
+        return super(LoginView, self).form_invalid(form)
 
 
 def profile(request):

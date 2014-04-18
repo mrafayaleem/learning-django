@@ -126,6 +126,10 @@ class CarAd(GenericMotorAd):
         (1, 'Gasoline'), (2, 'Hybrid'),
     )
 
+    MAKE = (
+        (0, 'Acura'), (1, 'Alpha Romeo'), (2, 'Aston')
+    )
+
     make = models.CharField(max_length=100, blank=False)
     year = models.IntegerField(choices=YEAR, blank=False)
     kilometers = models.PositiveIntegerField(blank=False)
@@ -145,6 +149,8 @@ class CarAd(GenericMotorAd):
     body_kit = models.BooleanField(default=False)
 
     category_id = models.IntegerField(default=GenericMotorAd.USED_CARS)
+
+
 
 
 

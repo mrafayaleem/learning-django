@@ -182,19 +182,19 @@
                      <h4 class="headline2" style="display:none">Already have a <span>Dubizzle</span> account? Please <a href='/accounts/login/' onclick='return false;' id='signin-link'>sign in</a>.</h4>
                      <div class="clear"></div>
                      <ul class="tabs">
-                        <li id="logintab">
+                        <li id="logintab" class="active">
                            <span class="lefttab"></span>
                            <a href="/accounts/login/" onclick='return false;'>Sign In</a>
                            <span class="righttab"></span>
                         </li>
-                        <li id="registertab" class="active">
+                        <li id="registertab">
                            <span class="lefttab"></span>
                            <a href="/accounts/register/" onclick='return false;'>Register</a>
                            <span class="righttab"></span>
                         </li>
                      </ul>
                      <div class="tab_container">
-                        <div id="tab1" class="tab_content">
+                        <div id="tab1" class="tab_content active_content">
                         {% for field, errors in form.errors.items %}
                            {{ field }}
                            {% for error in errors %}
