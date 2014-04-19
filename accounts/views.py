@@ -1,5 +1,4 @@
-from django.shortcuts import render_to_response, redirect
-from django.template import RequestContext
+from django.shortcuts import redirect
 from django.contrib.auth import login as django_login, logout as django_logout, authenticate
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.generic.edit import FormView
@@ -25,10 +24,10 @@ class LoginView(FormView):
             django_login(request, user)
             request.session['user_id'] = user.id
             request.session['user_short_name'] = user.get_short_name()
-            return redirect(self.success_url)
+            return super(LoginView, self).form_valid(form)
         else:
             return super(LoginView, self).form_invalid(form)  # To tell that user with these credentials is not
-            # registered.
+            # registered with Dubizzle.
 
     def form_invalid(self, form):
         """
@@ -37,50 +36,55 @@ class LoginView(FormView):
         return super(LoginView, self).form_invalid(form)
 
 
-def profile(request):
-    user_id = request.session.get('user_id', None)
-    if user_id:
-        user = DubizzleUser.objects.get(pk=user_id)  # You can certainly cache this.
-        if request.method != 'POST':
-            form = DubizzleUserProfileChangeForm(instance=user)
-        else:
-            form = DubizzleUserProfileChangeForm(request.POST, instance=user)
-            if form.is_valid():
-                form.save()
-        return render_to_response('accounts/profile.html', {
-            'form': form,
-            'user': user,
-            'user_short_name': request.session.get('user_short_name'),
-        }, context_instance=RequestContext(request))
-
-    else:
-        return redirect(reverse('accounts:register'))
-
-    # return render_to_response('accounts/profile.html', {})
-
-
-def register(request):
+class ProfileMainView(FormView):
     """
-    Dubizzle user registration view.
+    This is only the main tab implementation of the profile page. The rest of the tabs would be in separate views.
+    Correct if this methodology is wrong.
     """
-    if request.method == 'POST' and request.session.get('user_id', None) is None:
-        form = RegistrationForm(request.POST)
+    template_name = 'accounts/profile.html'
+    form_class = DubizzleUserProfileChangeForm
+    success_url = reverse_lazy('accounts:profile')
+
+    def post(self, request, *args, **kwargs):
+        user_id = request.session.get('user_id')
+        user = DubizzleUser.objects.get(pk=user_id)
+        form = self.form_class(request.POST, instance=user)
         if form.is_valid():
-            user = form.save()
-            user = authenticate(email=request.POST['email1'], password=request.POST['password1'])
-            django_login(request, user)
-            request.session['user_id'] = user.id
-            request.session['user_short_name'] = user.get_short_name()
-            return redirect('/')  # Redirect to user profile page is a better idea.
-    elif request.session.get('user_id', None) is None:
-        form = RegistrationForm()
-    else:
-        return redirect('/')  # This should be the user profile page.
-    return render_to_response('accounts/register.html', {
-        'form': form,
-        'register_status': 'class=active',
-        'user_short_name': request.session.get('user_short_name'),
-    }, context_instance=RequestContext(request))
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def get(self, request, *args, **kwargs):
+        user_id = request.session.get('user_id')
+        user_short_name = request.session.get('user_short_name')
+        user = DubizzleUser.objects.get(pk=user_id)
+        form = self.form_class(instance=user)
+        return self.render_to_response(self.get_context_data(form=form, user=user, user_short_name=user_short_name))
+
+    def form_valid(self, form):
+        form.save()
+        return super(ProfileMainView, self).form_valid(form)
+
+
+class RegisterView(FormView):
+    template_name = 'accounts/register.html'
+    form_class = RegistrationForm
+    success_url = reverse_lazy('accounts:profile')
+
+    def post(self, request, *args, **kwargs):
+        if request.session.get('user_id', None) is None:
+            return super(RegisterView, self).post(request, args, kwargs)
+        else:
+            return redirect(self.success_url)
+
+    def form_valid(self, form):
+        form.save()
+        request = self.request
+        user = authenticate(email=request.POST['email1'], password=request.POST['password1'])
+        django_login(request, user)
+        request.session['user_id'] = user.id
+        request.session['user_short_name'] = user.get_short_name()
+        return super(RegisterView, self).form_valid(form)
 
 
 def logout(request):

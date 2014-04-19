@@ -245,11 +245,7 @@
                            </form>                           
                         </div>
                         <!-- end #tab1 -->
-                        {% if register_status %}
                         <div id="tab2" class="tab_content active_content">
-                        {% else %}
-                        <div id="tab2" class="tab_content">
-                        {% endif %}                  
                            <!-- Modifying -->
                            <form action="/accounts/register/" method="post">
                               {% csrf_token %}
