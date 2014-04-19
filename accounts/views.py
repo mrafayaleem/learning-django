@@ -17,6 +17,12 @@ class LoginView(FormView):
             return super(LoginView, self).post(request, args, kwargs)
         return redirect(self.success_url)
 
+    def get(self, request, *args, **kwargs):
+        if request.session.get('user_id', None) is None:
+            return super(LoginView, self).get(request, args, kwargs)
+        else:
+            return redirect(self.success_url)
+
     def form_valid(self, form):
         request = self.request
         user = authenticate(email=request.POST['email'], password=request.POST['password'])
@@ -74,6 +80,12 @@ class RegisterView(FormView):
     def post(self, request, *args, **kwargs):
         if request.session.get('user_id', None) is None:
             return super(RegisterView, self).post(request, args, kwargs)
+        else:
+            return redirect(self.success_url)
+
+    def get(self, request, *args, **kwargs):
+        if request.session.get('user_id', None) is None:
+            return super(RegisterView, self).get(request, args, kwargs)
         else:
             return redirect(self.success_url)
 
