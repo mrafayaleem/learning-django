@@ -30,7 +30,8 @@
                      <p>We recommend you return to the page and wait for them.</p>
                      <a id="enter-details-return" class="button button-yalla button-green lobster">Wait for the photos</a>
                   </div>
-                  <form method="POST" action="/place-an-ad/taxonomy/motors/used-cars/new/">
+                  <!-- <form method="POST" action="/place-an-ad/taxonomy/motors/used-cars/new/"> -->
+                  <form method="POST" action="{% url 'marketplace:motor-ad-form' sub_category make model %}">
                   	{% csrf_token %}
                   	<!-- {{ form.errors|length }}
                   	{% for field, errors in form.errors.items %}
@@ -57,16 +58,6 @@
                         	{% if form.title.errors %}
                            	<span class="error-message">{{ form.title.errors|striptags }}</span>
                            	{% endif %}
-                        </div>
-                        <div class={% if form.make.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
-                           <label for="id_make" >
-                           {{ form.make.label }}
-                           </label>
-                           {{ form.make }}
-                           {% if form.make.errors %}
-                           <span class="error-message">{{ form.make.errors|striptags }}</span>
-                           {% endif %}
-                           <!-- <input data-helper-text="Phone no." name="phone_number" type="tel" pattern="\+?[0-9]*" placeholder="Phone number" id="id_phone_number" /> -->
                         </div>                        
                         <div class={% if form.phone.errors %} "error-field required-field" {%else%} "required-field" {% endif %}>
                            <label for="id_phone_number" >

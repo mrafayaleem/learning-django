@@ -5,7 +5,6 @@ from accounts.models import DubizzleUser
 
 
 class CarAdForm(forms.ModelForm):
-
     title = forms.CharField(widget=forms.TextInput, label='Title')
     phone = forms.CharField(widget=forms.NumberInput, label='Phone number')
     price = forms.CharField(widget=forms.NumberInput, label='Price')
@@ -15,7 +14,9 @@ class CarAdForm(forms.ModelForm):
     location = forms.ChoiceField(choices=GenericMotorAd.LOCATION, label='Location')
 
     # Ad specific.
-    make = forms.CharField(widget=forms.TextInput, label='Make')
+    make = forms.ChoiceField(label='Make', required=False, initial=0)
+    model = forms.CharField(label='Model', required=False, initial=0)
+
     year = forms.ChoiceField(choices=CarAd.YEAR, label='Year')
     kilometers = forms.CharField(widget=forms.NumberInput, label='Kilometers')
     color = forms.ChoiceField(choices=CarAd.COLOR, label='Color')
@@ -38,11 +39,12 @@ class CarAdForm(forms.ModelForm):
 
     class Meta:
         model = CarAd
-        fields = ['title', 'phone', 'price', 'description', 'make', 'year', 'kilometers',
+        fields = ['title', 'phone', 'price', 'description', 'year', 'kilometers',
                   'body_condition', 'mech_condition', 'seller_type', 'trim', 'body_type', 'doors', 'cylinders',
                   'color', 'transmission', 'horse_power', 'warranty', 'fuel', 'air_conditioning', 'body_kit',
                   'location'
-                  ]
+        ]
+        exclude = ['make', 'model']
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
@@ -60,3 +62,8 @@ class CarAdForm(forms.ModelForm):
 
 class MotorCycleAdForm(forms.ModelForm):
     pass
+
+
+class PlaceHolderAdForm(forms.ModelForm):
+    class Meta:
+        model = CarAd

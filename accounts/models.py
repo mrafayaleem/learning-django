@@ -5,7 +5,6 @@ from django.utils import timezone
 
 
 class DubizzleUserManager(BaseUserManager):
-
     def _create_user(self, email, password, is_staff=False):
         now = timezone.now()
         if not email:
@@ -50,7 +49,7 @@ class DubizzleUser(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(verbose_name='First Name', max_length=30, default='')
     last_name = models.CharField(verbose_name='Last Name', max_length=30, default='')
     mother_call = models.IntegerField(choices=MOTHER_CALL, default=0)
-    dob = models.DateField()
+    dob = models.DateField(auto_now_add=True)
     passport = models.IntegerField(choices=COUNTRIES, default=0)
     company_call = models.IntegerField(choices=COMPANY_CALL, default=0)
     academics = models.IntegerField(choices=ACADEMIC, default=0)

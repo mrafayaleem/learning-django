@@ -8,6 +8,7 @@ class EmailAuthBackend(object):
     """
     Dubizzle custom authentication backend.
     """
+
     def authenticate(self, email=None, password=None):
         """
         Custom authentication method to use email address.

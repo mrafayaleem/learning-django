@@ -1,7 +1,8 @@
 from django.shortcuts import redirect
-from django.contrib.auth import login as django_login, logout as django_logout, authenticate
+from django.contrib.auth import login as django_login, logout as django_logout, authenticate, views
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.generic.edit import FormView
+from django.http import HttpResponseRedirect
 
 from accounts.forms import AuthenticationForm, RegistrationForm, DubizzleUserProfileChangeForm
 from accounts.models import DubizzleUser
@@ -12,24 +13,26 @@ class LoginView(FormView):
     form_class = AuthenticationForm
     success_url = reverse_lazy('accounts:profile')
 
-    def post(self, request, *args, **kwargs):
-        if request.session.get('user_id', None) is None:
-            return super(LoginView, self).post(request, args, kwargs)
-        return redirect(self.success_url)
-
     def get(self, request, *args, **kwargs):
-        if request.session.get('user_id', None) is None:
-            return super(LoginView, self).get(request, args, kwargs)
-        else:
+        if request.user.is_authenticated():
             return redirect(self.success_url)
+        else:
+            form_class = self.get_form_class()
+            form = self.get_form(form_class)
+            context = self.get_context_data(form=form)
+            context['next'] = request.GET.get('next', None)
+            return self.render_to_response(context)
 
     def form_valid(self, form):
         request = self.request
         user = authenticate(email=request.POST['email'], password=request.POST['password'])
         if user is not None and user.is_active:
             django_login(request, user)
-            request.session['user_id'] = user.id
-            request.session['user_short_name'] = user.get_short_name()
+            self.request.session['user_id'] = user.id
+            self.request.session['user_short_name'] = user.get_short_name()
+            next_url = request.GET.get('next', None)
+            if next_url is not None:
+                return HttpResponseRedirect(next_url)
             return super(LoginView, self).form_valid(form)
         else:
             return super(LoginView, self).form_invalid(form)  # To tell that user with these credentials is not
@@ -94,8 +97,8 @@ class RegisterView(FormView):
         request = self.request
         user = authenticate(email=request.POST['email1'], password=request.POST['password1'])
         django_login(request, user)
-        request.session['user_id'] = user.id
-        request.session['user_short_name'] = user.get_short_name()
+        self.request.session['user_id'] = user.id
+        self.request.session['user_short_name'] = user.get_short_name()
         return super(RegisterView, self).form_valid(form)
 
 

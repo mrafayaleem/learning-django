@@ -126,11 +126,27 @@ class CarAd(GenericMotorAd):
         (1, 'Gasoline'), (2, 'Hybrid'),
     )
 
+    MAKE_ACURA = 1
+    MAKE_ALPHA_ROMEO = 2
+    MAKE_ASTON_MARTIN = 3
+
     MAKE = (
-        (0, 'Acura'), (1, 'Alpha Romeo'), (2, 'Aston')
+        (MAKE_ACURA, 'Acura'),
+        (MAKE_ALPHA_ROMEO, 'Alpha Romeo'),
+        (MAKE_ASTON_MARTIN, 'Aston Martin')
     )
 
-    make = models.CharField(max_length=100, blank=False)
+    MODEL = {
+        MAKE_ACURA: ((100, 'CSX/EL'), (101, 'MDX'), (102, 'NSX'), (-100, 'Other')),
+        MAKE_ALPHA_ROMEO: ((200, '145/146/147'), (201, '156/159'), (-202, '166'), (-200, 'Other')),
+        MAKE_ASTON_MARTIN: ((300, 'Cygnet'), (301, 'DB7/DB9'), (-300, 'Other'))
+    }
+
+    make = models.IntegerField(choices=MAKE, blank=False)
+    model = models.IntegerField(blank=False)
+
+    # make = models.CharField(max_length=100, blank=False)
+
     year = models.IntegerField(choices=YEAR, blank=False)
     kilometers = models.PositiveIntegerField(blank=False)
     color = models.IntegerField(choices=COLOR, blank=False)
@@ -151,6 +167,26 @@ class CarAd(GenericMotorAd):
     category_id = models.IntegerField(default=GenericMotorAd.USED_CARS)
 
 
+# class CarMake(models.Model):
+#     MAKE = (
+#         (0, 'Acura'), (1, 'Alpha Romeo'), (2, 'Aston')
+#     )
+#     make = models.IntegerField(choices=MAKE, blank=False)
+#
+#
+# class CarModel(models.Model):
+#     ACURA = (
+#         (0, 'CSX/EL'), (1, 'MDX'), (2, 'NSX')
+#     )
+#     MODEL = (
+#         (0, '145/146/147'), (1, ''), (2, '')
+#     )
+#     model = models.IntegerField(choices=ACURA, blank=False)
+#     make = models.ForeignKey(CarMake)
+#
+#     def __init__(self, *args, **kwargs):
+#         super(CarModel, self).__init__(*args, **kwargs)
+#         self._meta.get_field_by_name('model')[0]._choices = None
 
 
 

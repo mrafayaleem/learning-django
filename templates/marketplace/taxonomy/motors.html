@@ -26,11 +26,10 @@
                      <div id="tax-category-list">
                         <div id="tax-categories">
                            <ul class="motors">
-                            {% for key, value in template_dict.items %}
-
+                            {% for value in template_tuple %}
                               <li>
-                                 <a href={{ value.1 }}>
-                                 <span>{{ key|capfirst }}</span>
+                                 <a href={{ value.0 }}>
+                                 <span>{{ value.1|capfirst }}</span>
                                  </a>
                               </li>
                             {% endfor %}

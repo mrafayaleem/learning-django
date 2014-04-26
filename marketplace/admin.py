@@ -10,5 +10,6 @@ class VehicleAdAdmin(admin.ModelAdmin):
 class MotorCycleAdAdmin(admin.ModelAdmin):
     pass
 
+
 admin.site.register(CarAd, VehicleAdAdmin)
 admin.site.register(MotorCycleAd, MotorCycleAdAdmin)

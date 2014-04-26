@@ -1,1 +1,1 @@
-from motoradforms import CarAdForm, MotorCycleAdForm
+from motoradforms import CarAdForm, MotorCycleAdForm, PlaceHolderAdForm

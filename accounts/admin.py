@@ -7,7 +7,6 @@ from accounts.forms import RegistrationForm, DubizzleUserChangeForm
 
 
 class DubizzleUserAdmin(UserAdmin):
-
     form = DubizzleUserChangeForm
     add_form = RegistrationForm
 
@@ -15,7 +14,7 @@ class DubizzleUserAdmin(UserAdmin):
     list_filter = ('is_staff',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info',  {'fields': ('first_name', 'last_name')}),
+        ('Personal info', {'fields': ('first_name', 'last_name')}),
         ('Permissions', {'fields': ('is_staff',)})
     )
 
@@ -29,5 +28,6 @@ class DubizzleUserAdmin(UserAdmin):
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ()
+
 
 admin.site.register(DubizzleUser, DubizzleUserAdmin)

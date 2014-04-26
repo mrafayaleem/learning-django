@@ -28,7 +28,7 @@ class DubizzleUserProfileChangeForm(forms.ModelForm):
     YEAR = (
         range(1921, datetime.datetime.now().year + 1)
     )
-    dob = forms.DateField(widget=SelectDateWidget(years=YEAR),)
+    dob = forms.DateField(widget=SelectDateWidget(years=YEAR), )
     ocassional_updates = forms.BooleanField(required=False, label='Allow Dubizzle to send me ocassional updates about '
                                                                   'the site.', initial=True)
     amazing_offers = forms.BooleanField(required=False, label='Send me amazing offers and bargains from our advertising'

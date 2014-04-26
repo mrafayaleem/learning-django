@@ -200,9 +200,13 @@
                            {% for error in errors %}
                               {{ error }}
                            {% endfor %}
-                        {% endfor %}                  
+                        {% endfor %}
+                        {% if next %}
+                           <form method="post" style="clear:both" id="login-form" action="/accounts/login/?next={{next}}">
+                        {%else%}
                            <form method="post" style="clear:both" id="login-form" action="/accounts/login/">
-                              {% csrf_token %}
+                        {% endif %}
+                           {% csrf_token %}
                               <!-- <div id="register-head">
                                  <h4>Sign in with Facebook</h4>
                                  <p class="note2">Use Facebook to sign in to Dubizzle</p>
